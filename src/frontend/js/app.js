@@ -153,7 +153,8 @@ function updateTable(data) {
             model: row.model,
             success: row.success_qty,
             fail: row.fail_qty,
-            total: row.total_qty
+            total: row.total_qty,
+            target: row.target
         });
 
         const tr = document.createElement('tr');
@@ -162,6 +163,7 @@ function updateTable(data) {
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${row.success_qty}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${row.fail_qty}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${row.total_qty}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${row.target || 'N/A'}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatPercentage(row.quality)}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${row.performance ? formatPercentage(row.performance) : 'N/A'}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${row.oee ? formatPercentage(row.oee) : 'N/A'}</td>

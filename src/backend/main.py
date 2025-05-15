@@ -69,8 +69,8 @@ async def websocket_endpoint(websocket: WebSocket, unit_name: str):
             production_data = get_production_data(unit_name, start_time, end_time)
             await websocket.send_json(production_data)
             
-            # Wait for 1 minute before sending the next update
-            await asyncio.sleep(60)
+            # Wait for 30 seconds before sending the next update
+            await asyncio.sleep(30)
             
     except WebSocketDisconnect:
         manager.disconnect(websocket)

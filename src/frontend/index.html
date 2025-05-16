@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Üretim Takip</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto px-4 py-8">
@@ -16,23 +15,47 @@
         
         <!-- Settings Panel -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <form id="productionForm" class="space-y-6">
+                <!-- Unit Selection -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Üretim Birimi</label>
-                    <select id="unitSelect" class="w-full p-2 border rounded-md">
-                        <option value="">Birim Seçin...</option>
-                    </select>
+                    <div id="unitCheckboxes" class="max-h-48 overflow-y-auto p-2 border rounded-md grid grid-cols-2 gap-2">
+                        <!-- Checkboxes will be populated here -->
+                    </div>
                 </div>
+
+                <!-- Time Range Selection -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Zaman Aralığı</label>
-                    <input type="text" id="timeRange" class="w-full p-2 border rounded-md" />
+                    <div class="space-y-2">
+                        <input type="text" id="timeRange" class="w-full p-2 border rounded-md mb-2" />
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" id="shift1" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">
+                                08:00 - 16:00
+                            </button>
+                            <button type="button" id="shift2" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">
+                                16:00 - 24:00
+                            </button>
+                            <button type="button" id="shift3" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">
+                                00:00 - 08:00
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="flex justify-end">
-                <button id="refreshButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Verileri Yenile
-                </button>
-            </div>
+
+                <!-- Submit and Refresh Buttons -->
+                <div class="flex justify-end gap-4">
+                    <button type="button" id="screenButton" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                        Ekran
+                    </button>
+                    <button type="submit" id="submitButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Verileri Getir
+                    </button>
+                    <button type="button" id="refreshButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden">
+                        Verileri Yenile
+                    </button>
+                </div>
+            </form>
         </div>
 
         <!-- Total Production Summary -->
@@ -54,27 +77,9 @@
             </div>
         </div>
 
-        <!-- Results Table -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Üretim (OK)</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tamir</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Toplam</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Saatlik Hedef</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kalite</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performans</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">OEE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultsBody" class="bg-white divide-y divide-gray-200">
-                        <!-- Data will be populated here -->
-                    </tbody>
-                </table>
-            </div>
+        <!-- Results Tables Container -->
+        <div id="resultsContainer" class="space-y-8">
+            <!-- Unit tables will be dynamically inserted here -->
         </div>
     </div>
     <script src="/static/js/app.js"></script>

@@ -14,7 +14,7 @@ A real-time dashboard showing production quantity and OEE metrics using FastAPI,
 
 - Python 3.8+
 - Microsoft SQL Server
-- ODBC Driver 17 for SQL Server
+- ODBC Driver 18 for SQL Server
 
 ## Setup
 
@@ -43,20 +43,11 @@ A real-time dashboard showing production quantity and OEE metrics using FastAPI,
    ```
    The server will start at `http://localhost:8000`
 
-2. Open the frontend:
-   - Navigate to the `frontend` directory
-   - Open `index.html` in a web browser
-   - Or serve it using a local HTTP server:
-     ```bash
-     python -m http.server 8080
-     ```
-     Then visit `http://localhost:8080`
-
 ## Usage
 
-1. Select a production unit from the dropdown menu
+1. Select a production unit from the menu
 2. Choose a time range using the date-time picker
-3. The dashboard will automatically update with real-time data every minute
+3. The dashboard will automatically update with real-time data every 30 sec.
 4. The table shows:
    - Model name
    - Success quantity
